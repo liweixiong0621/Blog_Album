@@ -63,17 +63,17 @@ def compress(choose, des_dir, src_dir, file_list):
     if choose == '4':
         scale = SIZE_more_small_small
     for infile in file_list:
-    	print infile,des_dir
+    	#print infile,des_dir
         img = Image.open(src_dir+infile)
         # size_of_file = os.path.getsize(infile)
         w, h = img.size
         img.thumbnail((int(w/scale), int(h/scale)))
         img.save(des_dir + infile)
-        print "压缩完成"
+        print "complete"
 def compress_photo():
     '''调用压缩图片的函数
     '''
-    src_dir, des_dir = "photos/", "min_photos/"
+    src_dir, des_dir = "zhengshuang/", "min_zhengshuang/"
     
     if directory_exists(src_dir):
         if not directory_exists(src_dir):
@@ -84,7 +84,6 @@ def compress_photo():
         if not directory_exists(des_dir):
             make_directory(des_dir)
     	file_list_des = list_img_file(des_dir)
-    #print file_list_src
     '''如果已经压缩了，就不再压缩'''
     for i in range(len(file_list_des)):
         if file_list_des[i] in file_list_src:
@@ -99,7 +98,7 @@ def handle_photo():
     -----------
     最后将data.json文件存到博客的source/photos文件夹下
     '''
-    src_dir, des_dir = "photos/", "min_photos/"
+    src_dir, des_dir = "zhengshuang/", "min_zhengshuang/"
     file_list = list_img_file(src_dir)
     list_info = []
     for i in range(len(file_list)):
@@ -113,11 +112,11 @@ def handle_photo():
         year_month = date_str[0:7]            
         if i == 0:  # 处理第一个文件
             new_dict = {"date": year_month, "arr":{'year': date.year,
-                                                                   'month': date.month,
-                                                                   'link': [filename],
-                                                                   'text': [info],
-                                                                   'type': ['image']
-                                                                   }
+                                                    'month': date.month,
+                                                    'link': [filename],
+                                                    'text': [info],
+                                                    'type': ['image']
+                                                    }
                                         } 
             list_info.append(new_dict)
         elif year_month != list_info[-1]['date']:  # 不是最后的一个日期，就新建一个dict
@@ -143,7 +142,7 @@ def cut_photo():
     ----------
     调用Graphics类中的裁剪算法，将src_dir目录下的文件进行裁剪（裁剪成正方形）
     """
-    src_dir = "photos/"
+    #src_dir = "photos/"
     if directory_exists(src_dir):
         if not directory_exists(src_dir):
             make_directory(src_dir)
@@ -168,14 +167,14 @@ def git_operation():
     os.system('git commit -m "add photos"')
     os.system('git push origin master')
 
-# if __name__ == "__main__":
+#if __name__ == "__main__":
 #     cut_photo()        # 裁剪图片，裁剪成正方形，去中间部分
 #     compress_photo()   # 压缩图片，并保存到mini_photos文件夹下
 #     git_operation()    # 提交到github仓库
 #     handle_photo()     # 将文件处理成json格式，存到博客仓库中
-cut_photo()        # 裁剪图片，裁剪成正方形，去中间部分
+#     cut_photo()        # 裁剪图片，裁剪成正方形，去中间部分
 compress_photo()   # 压缩图片，并保存到mini_photos文件夹下
-#git_operation()    # 提交到github仓库
+git_operation()    # 提交到github仓库
 handle_photo()     # 将文件处理成json格式，存到博客仓库中   
     
     
