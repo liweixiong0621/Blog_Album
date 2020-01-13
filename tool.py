@@ -73,7 +73,7 @@ def compress(choose, des_dir, src_dir, file_list):
 def compress_photo():
     '''调用压缩图片的函数
     '''
-    src_dir, des_dir = "zhengshuang/", "min_zhengshuang/"
+    src_dir, des_dir = "photos/", "min_photos/"
     
     if directory_exists(src_dir):
         if not directory_exists(src_dir):
@@ -98,11 +98,12 @@ def handle_photo():
     -----------
     最后将data.json文件存到博客的source/photos文件夹下
     '''
-    src_dir, des_dir = "zhengshuang/", "min_zhengshuang/"
+    src_dir, des_dir = "photos/", "min_photos/"
     file_list = list_img_file(src_dir)
     list_info = []
     for i in range(len(file_list)):
         filename = file_list[i]
+        #size = PIL.Image,open(file_list[i]).size
         #print filename
         date_str, info = filename.split("_")
         #info='_'.join(info)
@@ -113,7 +114,8 @@ def handle_photo():
         if i == 0:  # 处理第一个文件
             new_dict = {"date": year_month, "arr":{'year': date.year,
                                                     'month': date.month,
-                                                    'link': [filename],
+                                                    'link': [filename],\
+                                                    #'size': 
                                                     'text': [info],
                                                     'type': ['image']
                                                     }
