@@ -32,7 +32,7 @@ def list_img_file(directory):
     new_list = []
     for filename in old_list:
         name, fileformat = filename.split(".")
-        if fileformat.lower() == "jpg" or fileformat.lower() == "png" or fileformat.lower() == "gif":
+        if fileformat.lower() == "jpg" or fileformat.lower() == "png" or fileformat.lower() == "gif"or fileformat.lower() == "jpeg":
             new_list.append(filename)
     # print new_list
     return new_list
@@ -169,6 +169,7 @@ def git_operation():
     os.system('git add --all')
     os.system('git commit -m "add photos"')
     os.system('git push origin master')
+    os.system('git hexoupdate')
 
 #if __name__ == "__main__":
 #     cut_photo()        # 裁剪图片，裁剪成正方形，去中间部分
