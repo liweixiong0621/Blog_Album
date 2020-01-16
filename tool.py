@@ -3,6 +3,7 @@ from PIL import Image
 import os
 import sys
 import json
+import io
 from datetime import datetime
 from ImageProcess import Graphics
 
@@ -69,7 +70,7 @@ def compress(choose, des_dir, src_dir, file_list):
         w, h = img.size
         img.thumbnail((int(w/scale), int(h/scale)))
         img.save(des_dir + infile)
-        print "complete"
+        print("complete")
 def compress_photo():
     '''调用压缩图片的函数
     '''
@@ -83,11 +84,11 @@ def compress_photo():
     if directory_exists(des_dir):
         if not directory_exists(des_dir):
             make_directory(des_dir)
-    	file_list_des = list_img_file(des_dir)
+        file_list_des = list_img_file(des_dir)
     '''如果已经压缩了，就不再压缩'''
     for i in range(len(file_list_des)):
         if file_list_des[i] in file_list_src:
-			file_list_src.remove(file_list_des[i])
+            file_list_src.remove(file_list_des[i])
     compress('4', des_dir, src_dir, file_list_src)
 
 
@@ -104,7 +105,7 @@ def handle_photo():
     for i in range(len(file_list)):
         filename = file_list[i]
         #size = PIL.Image,open(file_list[i]).size
-        #print filename
+        print(filename)
         date_str, info = filename.split("_")
         #info='_'.join(info)
         info = info.split(".")[0]
@@ -136,15 +137,15 @@ def handle_photo():
             list_info[-1]['arr']['type'].append('image')
     list_info.reverse()  # 翻转
     final_dict = {"list": list_info}
-    with open("D://web/themes/next/source/lib/album/data.json","w") as fp:
-        json.dump(final_dict, fp)
+    with io.open("D://web/themes/next/source/lib/album/data.json","w",encoding='utf-8') as fp:
+        json.dump(final_dict, fp, ensure_ascii=False)
 def cut_photo():
     """裁剪算法
     
     ----------
     调用Graphics类中的裁剪算法，将src_dir目录下的文件进行裁剪（裁剪成正方形）
     """
-    #src_dir = "photos/"
+    src_dir = "photos/"
     if directory_exists(src_dir):
         if not directory_exists(src_dir):
             make_directory(src_dir)
@@ -174,7 +175,7 @@ def git_operation():
 #     compress_photo()   # 压缩图片，并保存到mini_photos文件夹下
 #     git_operation()    # 提交到github仓库
 #     handle_photo()     # 将文件处理成json格式，存到博客仓库中
-#     cut_photo()        # 裁剪图片，裁剪成正方形，去中间部分
+cut_photo()        # 裁剪图片，裁剪成正方形，去中间部分
 compress_photo()   # 压缩图片，并保存到mini_photos文件夹下
 git_operation()    # 提交到github仓库
 handle_photo()     # 将文件处理成json格式，存到博客仓库中   
